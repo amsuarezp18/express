@@ -4,6 +4,7 @@ var router = express.Router();
 const Joi = require('joi');
 const Message = require('../models/messages');
 const { response } = require('express');
+const { where } = require('sequelize');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -39,4 +40,27 @@ router.post('/api/messages/', (req, res) => {
 });
 
 /* UPDATE Message */ 
+router.put('/api/messages/update/:id', (req, res) =>{
+    Message.update({
+        title: req.body.title,
+        content: req.body.content
+      },
+      {
+        where: {
+          id: req.params.id
+        }
+      }).then( (result) => res.json(result) );
+});
+
+/* DELETE Message */
+router.delete('/api/messages/delete/:id', (req, res) => {
+    Message.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then( (result) => res.json(result) )
+});
+
+
+
 module.exports = router;
