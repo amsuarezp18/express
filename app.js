@@ -5,29 +5,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
-const { Sequelize, Model, DataType, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory');
-
-class Message extends Model{}
-Message.init({
-    message: DataTypes.TEXT,
-    author: DataTypes.STRING,
-    ts: DataTypes.INTEGER, 
-    },
-    { sequelize, modelName: 'messages'}
-    
-    );
-
-(async () => {
-    await sequelize.sync();
-    const angelita = await Message.create({
-        message: 'Hola mundo feo',
-        author: 'Angelita Bonita',
-        ts: 23456543,
-    });
-    console.log(angelita.toJSON());
-})();
+var chatRouter = require('./routes/chat');
 
 var app = express();
 
@@ -39,5 +17,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/chat', chatRouter);
 
 module.exports = app;
