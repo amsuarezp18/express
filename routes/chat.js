@@ -4,7 +4,11 @@ var router = express.Router();
 const Joi = require('joi');
 const Message = require('../models/messages');
 const { response } = require('express');
+const bodyParser = require('body-parser');
 const { where } = require('sequelize');
+
+router.use(bodyParser.urlencoded({extended: false}));
+router.use(bodyParser.json());
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -32,11 +36,15 @@ router.get('/api/messages/:id', (req, res) => {
 });
 
 /* POST Message */
-router.post('/api/messages/', (req, res) => {
+router.post('/api/messages/create', (req, res) => {
+    console.log(req.body);
     Message.create({
-        title: req.body.title,
-        content: req.body.content
-    }).then( (result) => res.json(result) );
+        message: req.body.message,
+        author: req.body.author,
+        ts: req.body.ts
+    }).then((response) =>{
+        res.send("Mensaje creado");
+    });
 });
 
 /* UPDATE Message */ 
