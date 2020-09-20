@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-/* GET Messages */
+/* GET Messages work*/
 router.get('/api/messages', function(req, res, next) {
     Message.findAll().then((result) =>{
         res.send(result);
@@ -23,19 +23,19 @@ router.get('/api/messages', function(req, res, next) {
     
   });
 
-/* GET by Ts Message */
-router.get('/api/messages/:id', (req, res) => {
-    Message.findByPk(req.params.id).then((response) => {
-        if( response === null){
-            return res
-                .status(404)
-                .send('The message you are trying to find does not exist');
-        }
-        res.send(response);
-    });
+/* GET by Ts Message work */
+router.get('/api/messages/:ts', (req, res) => {
+   let messageTs = req.params.ts
+   Message.findOne({
+       where: {
+           ts: messageTs
+       }
+   }).then( message => {
+       res.json(message)
+   });
 });
 
-/* POST Message */
+/* POST Message work*/
 router.post('/api/messages/create', (req, res) => {
     console.log(req.body);
     Message.create({
@@ -61,12 +61,15 @@ router.put('/api/messages/update/:id', (req, res) =>{
 });
 
 /* DELETE Message */
-router.delete('/api/messages/delete/:id', (req, res) => {
+router.delete('/api/messages/delete/:ts', (req, res) => {
+    console.log(req.body);
     Message.destroy({
         where: {
-            id: req.params.id
+            ts: req.body.ts
         }
-    }).then( (result) => res.json(result) )
+    }).then( (result) => {
+        res.send("Mensaje Borrado");
+    });
 });
 
 
