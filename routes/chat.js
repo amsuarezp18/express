@@ -48,16 +48,20 @@ router.post('/api/messages/create', (req, res) => {
 });
 
 /* UPDATE Message */ 
-router.put('/api/messages/update/:id', (req, res) =>{
-    Message.update({
-        title: req.body.title,
-        content: req.body.content
-      },
-      {
+router.put('/api/messages', (req, res) =>{
+    let messageTs = req.body.ts
+    let newData = req.body
+
+    Message.findOne({
         where: {
-          id: req.params.id
+            ts: messageTs
         }
-      }).then( (result) => res.json(result) );
+    }).then(response =>{
+        response.update(newData)
+                .then(newMessage =>{
+                    res.json(newMessage)
+                })
+    })
 });
 
 /* DELETE Message */
