@@ -47,7 +47,7 @@ router.post('/api/messages/create', (req, res) => {
     });
 });
 
-/* UPDATE Message */ 
+/* UPDATE Message work */ 
 router.put('/api/messages', (req, res) =>{
     let messageTs = req.body.ts
     let newData = req.body
@@ -66,14 +66,16 @@ router.put('/api/messages', (req, res) =>{
 
 /* DELETE Message */
 router.delete('/api/messages/delete/:ts', (req, res) => {
-    console.log(req.body);
-    Message.destroy({
-        where: {
-            ts: req.body.ts
-        }
-    }).then( (result) => {
-        res.send("Mensaje Borrado");
-    });
+   let messageTs = req.params.ts
+
+   Message.destroy({
+       where:{
+           ts: messageTs
+       }
+   }).then(() =>{
+       res.send("El mensaje fue eliminado")
+   })
+
 });
 
 
