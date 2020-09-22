@@ -1,7 +1,8 @@
 var express = require("express");
 var router = express.Router();
 
-const Joi = require("joi");
+
+var validation = require("../public/logic/message_logic");
 const Message = require("../models/messages");
 const { response } = require("express");
 const bodyParser = require("body-parser");
@@ -48,6 +49,11 @@ router.get("/api/messages/:ts", (req, res, next) => {
 
 /* POST Message work*/
 router.post("/api/messages/create", (req, res, next) => {
+
+    let verify = validation.validate(req.body);
+    if (verify != "OK") {
+      return res.status(400).send("Please entre correct inputs");
+    } 
   try {
     Message.create({
       message: req.body.message,
@@ -66,6 +72,8 @@ router.post("/api/messages/create", (req, res, next) => {
 router.put("/api/messages", (req, res, next) => {
   
     let messageTs = req.body.ts;
+    console.log("...............")
+    
     let newData = req.body;
 
     Message.findOne({
@@ -80,6 +88,7 @@ router.put("/api/messages", (req, res, next) => {
                     message: 'The given message does not exist',
                 })
             }
+            console.log(response.id)
             response.update(newData)
             .then(newMessage =>{
                 try{

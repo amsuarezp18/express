@@ -11,14 +11,12 @@ const wsConnection = (server) => {
     sendMessages();
 
     ws.on("message", (message) => {
-      messages.push("hjkhhjggggg")
       messages.push(message);
       sendMessages();
     });
   });
 
   const sendMessages = () => {
-    clients.forEach((client) => client.send("hikki"));
     clients.forEach((client) => client.send(JSON.stringify(messages)));
   };
 };
