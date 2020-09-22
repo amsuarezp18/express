@@ -22,6 +22,10 @@ Esta prueba falla debido a que se impleto la librería Joi para hacer validacion
 Handdle exceptions and returning a 404 code status
 ![](https://github.com/amsuarezp18/express/blob/master/support/6.png)
 
+# PUT message
+Validation of update request
+![](https://github.com/amsuarezp18/express/blob/master/support/10.png)
+
 ## DELETE a message with a invalid ts
 Handdle exceptions and returning a 404 code status
 ![](https://github.com/amsuarezp18/express/blob/master/support/7.png)
