@@ -1,7 +1,5 @@
 var express = require("express");
 var router = express.Router();
-
-
 var validation = require("../public/logic/message_logic");
 const Message = require("../models/messages");
 const { response } = require("express");
@@ -71,10 +69,9 @@ router.post("/api/messages/create", (req, res, next) => {
 /* UPDATE Message work */
 router.put("/api/messages", (req, res, next) => {
   
-    let messageTs = req.body.ts;
-    console.log("...............")
-    
+    let messageTs = req.body.ts; 
     let newData = req.body;
+    console.log("hola")
 
     Message.findOne({
       where: {
@@ -88,7 +85,6 @@ router.put("/api/messages", (req, res, next) => {
                     message: 'The given message does not exist',
                 })
             }
-            console.log(response.id)
             response.update(newData)
             .then(newMessage =>{
                 try{
